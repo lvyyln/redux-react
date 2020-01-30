@@ -1,18 +1,22 @@
-import React,{Component} from "react";
+import React, {Component} from "react";
 import Spinner from "../spinner/spinner";
 import ErrorIndicator from "../error-indicator/error-indicator";
 import ErrorBoundry from "../error-boundry/error-boundry";
-export default class App extends Component{
-    render(){
-        return(
-            <div>
-                <ErrorBoundry>
-                <Spinner>
+import {withBookstoreService} from "../hoc";
+import {Route,Switch} from 'react-router-dom';
+import {CartPage, HomePage} from "../pages";
 
-                </Spinner>
-                <ErrorIndicator></ErrorIndicator>
-                </ErrorBoundry>
-            </div>
-        )
-    }
-}
+const App = () =>{
+    return (
+        <Switch>
+            <Route path ="/"
+                   component ={HomePage}
+                   exact/>
+            <Route
+                   path = "/cart"
+                   component={CartPage}
+            />
+        </Switch>
+    )
+};
+export default App;
