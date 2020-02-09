@@ -1,22 +1,35 @@
-import React, {Component} from "react";
-import Spinner from "../spinner/spinner";
-import ErrorIndicator from "../error-indicator/error-indicator";
-import ErrorBoundry from "../error-boundry/error-boundry";
-import {withBookstoreService} from "../hoc";
-import {Route,Switch} from 'react-router-dom';
-import {CartPage, HomePage} from "../pages";
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+import ShopHeader from '../shop-header';
+import { HomePage, CartPage } from '../pages';
 
-const App = () =>{
+import './app.css';
+import {connect} from "react-redux";
+
+const App = ({total,itemsCount}) => {
     return (
-        <Switch>
-            <Route path ="/"
-                   component ={HomePage}
-                   exact/>
-            <Route
-                   path = "/cart"
-                   component={CartPage}
-            />
-        </Switch>
-    )
+        <main role="main" className="container">
+            <ShopHeader numItems={itemsCount} total={total}/>
+            <Switch>
+                <Route
+                    path="/"
+                    component={HomePage}
+                    exact />
+
+                <Route
+                    path="/cart"
+                    component={CartPage}
+                />
+            </Switch>
+        </main>
+    );
 };
-export default App;
+
+const mapStateToProps = (state) => {
+  return {
+      total : state.shoppingCart.orderTotal,
+      itemsCount : state.shoppingCart.cartItems.count
+  }
+};
+
+export default connect(mapStateToProps)(App);
